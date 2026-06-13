@@ -1,0 +1,160 @@
+name: Envio FinOps Framework
+description: >-
+  FinOps considerations for teams using Envio's blockchain data indexing
+  platform. Covers cost visibility, allocation, optimisation, and governance
+  for HyperIndex hosted deployments and HyperSync API consumption across
+  Development, Production, and Dedicated plan tiers.
+specificationVersion: "1.0"
+framework: FinOps Framework
+alignment: FOCUS
+
+capabilities:
+
+  understand:
+    name: Understand
+    description: Gain visibility into Envio spending and usage patterns
+    practices:
+      - name: Usage Monitoring
+        description: >-
+          Track HyperSync usage via two metrics in the Envio Cloud dashboard:
+          Number of Requests (raw call count) and Credits (composite metric
+          combining data bandwidth and disk read operations). Monitor both to
+          identify cost drivers.
+        url: https://envio.dev/app/api-tokens
+
+      - name: Plan Tier Awareness
+        description: >-
+          Understand which plan tier is active for each deployment:
+          Development (free, 30-day max), Production Small, Production Medium,
+          Production Large, or Dedicated. Each tier has different cost structures
+          and processing limits that directly affect spend.
+        url: https://envio.dev/pricing
+
+      - name: Event Processing Tracking
+        description: >-
+          Monitor total events processed per indexer deployment. The Development
+          plan soft-limits at 100,000 events. Production plans have progressively
+          higher thresholds. High event volumes on shared plans may require
+          upgrading to avoid deployment deletion or throttling.
+
+  optimize:
+    name: Optimize
+    description: Reduce Envio costs without sacrificing indexing capability
+    practices:
+      - name: Use Development Plan for Non-Production
+        description: >-
+          Leverage the free Development plan for all pre-production workloads.
+          Be aware of the 30-day deployment lifespan and 5GB / 100,000-event
+          soft limits to avoid unexpected deletion.
+
+      - name: HyperSync Query Optimisation
+        description: >-
+          Minimise Credits consumption by requesting only required fields via
+          HyperSync field selection. Narrow block ranges to avoid unnecessary
+          disk reads. Use max_num_blocks, max_num_logs, and similar limit
+          parameters to cap per-request data volumes.
+
+      - name: API Token Management
+        description: >-
+          Ensure all HyperSync requests use an authenticated token. Unauthenticated
+          requests are rate-limited and may trigger retries, inflating request
+          counts. Rotate tokens periodically and restrict access to necessary
+          personnel to prevent unintended usage.
+        url: https://docs.envio.dev/docs/HyperSync/api-tokens
+
+      - name: Batch and Concurrency Tuning
+        description: >-
+          Tune HyperSync batch sizes and concurrency settings in output stream
+          configuration to maximise throughput per Credit consumed, reducing
+          the total number of requests needed for a backfill.
+
+      - name: Annual Commitment Discount
+        description: >-
+          Envio typically offers 2 months free for annual commitments on
+          Production and Dedicated plans. Evaluate total cost of ownership
+          before committing to a monthly billing cadence.
+        url: https://discord.gg/envio
+
+  allocate:
+    name: Allocate
+    description: Attribute Envio costs to teams, products, or cost centres
+    practices:
+      - name: Per-Deployment Cost Attribution
+        description: >-
+          Each HyperIndex deployment maps to a distinct plan subscription.
+          Assign separate deployments to distinct teams or products to enable
+          clear cost attribution without needing tag-based allocation.
+
+      - name: API Token Per Team
+        description: >-
+          Issue separate HyperSync API tokens per team or service. This allows
+          usage dashboards to surface Credits and Request counts broken out by
+          token, providing team-level cost attribution for HyperSync consumption.
+
+      - name: Dedicated Plan for Isolation
+        description: >-
+          For teams requiring hard cost isolation and predictable monthly spend,
+          the Dedicated plan provides custom infrastructure and SLA-backed
+          resource allocation that maps cleanly to a single cost centre.
+
+  benchmark:
+    name: Benchmark
+    description: Compare Envio costs against alternatives and internal targets
+    practices:
+      - name: Indexer Performance Benchmarking
+        description: >-
+          Envio has been independently benchmarked (Sentio, April 2025) as
+          indexing Uniswap V2 Factory in 8 seconds versus The Graph's 19 minutes.
+          Use similar benchmarks to validate that Envio's cost-per-event is
+          competitive for your specific workload before committing to a paid tier.
+
+      - name: HyperSync vs RPC Cost Comparison
+        description: >-
+          HyperSync delivers up to 2,000x faster data retrieval than standard
+          JSON-RPC endpoints. Evaluate the cost of HyperSync Credits against
+          the infrastructure and RPC node subscription costs for an equivalent
+          self-hosted indexing solution.
+
+  operate:
+    name: Operate
+    description: Govern Envio usage and prevent cost overruns
+    practices:
+      - name: Deployment Lifecycle Management
+        description: >-
+          Actively monitor Development plan deployments to avoid unexpected
+          deletion. Set internal reminders for the 30-day lifespan and 7-day
+          inactivity policy. Migrate to a Production plan before critical
+          deployments approach Development limits.
+
+      - name: Token Rotation Policy
+        description: >-
+          Establish a periodic API token rotation schedule. Revoke tokens for
+          departed team members immediately to prevent unauthorised usage that
+          accumulates Credits against your billing account.
+
+      - name: Discord-Based Procurement
+        description: >-
+          Dedicated and negotiated Production plan pricing is arranged via
+          Envio's Discord. Ensure procurement decisions are documented and
+          approved before opening a Discord ticket to avoid unapproved spend
+          commitments.
+        url: https://discord.gg/envio
+
+costDrivers:
+  - name: Events Processed
+    description: Total smart contract events indexed per deployment
+    tier: All paid plans
+  - name: Storage Used
+    description: Total data stored for indexed events and state
+    tier: All paid plans
+  - name: HyperSync Credits
+    description: >-
+      Composite usage metric for HyperSync REST API calls, factoring in
+      bandwidth and disk reads per query
+    tier: HyperSync API consumers
+  - name: HyperSync Request Count
+    description: Raw count of API calls to HyperSync endpoints
+    tier: HyperSync API consumers
+  - name: GraphQL Query Volume
+    description: Volume of GraphQL queries against HyperIndex hosted endpoints
+    tier: All HyperIndex hosted plans

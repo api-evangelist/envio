@@ -1,0 +1,88 @@
+name: Envio Rate Limits
+description: >-
+  Envio enforces rate limits primarily through the HyperSync API tier and
+  GraphQL query access attached to HyperIndex hosted deployments. Unauthenticated
+  HyperSync requests are rate-limited; authenticated requests using an API token
+  receive higher or unrestricted throughput depending on the active plan.
+  HyperSync requests are subject to a 5-second per-request time limit, requiring
+  pagination for large dataset retrievals.
+specificationVersion: "0.1"
+url: https://docs.envio.dev/docs/HyperSync/api-tokens
+
+rateLimits:
+  - name: HyperSync Unauthenticated Rate Limit
+    description: >-
+      Requests to HyperSync endpoints without a bearer API token are subject
+      to reduced rate limits. Exact request-per-second figures are not
+      publicly documented. Unauthenticated access has been restricted since
+      November 3, 2025; an API token is required for all meaningful usage.
+    scope: HyperSync REST API
+    authenticated: false
+    enforced: true
+    notes: >-
+      API tokens are required from November 3, 2025 for self-hosted and
+      direct HyperSync access. Envio Cloud-deployed indexers receive exempt
+      access and do not need a separately configured token.
+
+  - name: HyperSync Authenticated Rate Limit
+    description: >-
+      Requests authenticated with a valid bearer token are granted higher
+      throughput access to HyperSync endpoints. Specific requests-per-second
+      values are not publicly documented and depend on the active billing plan.
+      Usage is measured in two components: Number of Requests and Credits
+      (which account for data bandwidth and disk read operations).
+    scope: HyperSync REST API
+    authenticated: true
+    tokenSource: https://envio.dev/app/api-tokens
+    enforced: true
+    usageMetrics:
+      - name: Requests
+        description: Raw count of API calls made to HyperSync endpoints
+      - name: Credits
+        description: >-
+          Composite metric factoring in data bandwidth and disk read
+          operations per request
+
+  - name: HyperSync Per-Request Timeout
+    description: >-
+      Individual HyperSync requests are subject to a 5-second time limit.
+      Queries returning large result sets must be paginated using block-range
+      chunking and the from_block / to_block parameters.
+    scope: HyperSync REST API
+    type: timeout
+    limitValue: 5
+    limitUnit: seconds
+    enforced: true
+
+  - name: HyperIndex GraphQL Rate Limit
+    description: >-
+      GraphQL query rate limits on HyperIndex hosted deployments are
+      progressively elevated by plan tier. Development plan deployments
+      have the lowest limits; Production and Dedicated plans receive
+      higher limits. Exact numeric thresholds are not publicly documented.
+    scope: HyperIndex GraphQL API
+    authenticated: true
+    enforced: true
+    tierBased: true
+    tiers:
+      - plan: Development
+        level: Low
+      - plan: Production Small
+        level: Elevated
+      - plan: Production Medium
+        level: Higher
+      - plan: Production Large
+        level: Highest shared-infrastructure
+      - plan: Dedicated
+        level: Custom / negotiated
+
+authentication:
+  type: Bearer Token
+  headerName: Authorization
+  headerFormat: "Bearer {token}"
+  tokenGenerationUrl: https://envio.dev/app/api-tokens
+  environmentVariable: ENVIO_API_TOKEN
+  notes: >-
+    Tokens are created via the Envio Cloud dashboard. Best practices include
+    storing tokens in environment variables, adding .env files to .gitignore,
+    and rotating tokens periodically.

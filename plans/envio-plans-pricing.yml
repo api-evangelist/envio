@@ -1,0 +1,98 @@
+name: Envio Plans and Pricing
+description: >-
+  Envio offers tiered pricing for HyperIndex hosted deployments and HyperSync
+  API access. Plans range from a free Development tier for prototyping to
+  Production tiers for scaled workloads and a Dedicated tier with custom
+  infrastructure and SLAs. Pricing details for paid tiers require contacting
+  Envio directly or visiting the pricing page.
+specificationVersion: "0.1"
+url: https://envio.dev/pricing
+
+plans:
+  - name: Development
+    description: >-
+      Free tier for testing, prototyping, and early development. Indexer
+      deployments have a maximum lifespan of 30 days and are automatically
+      deleted when hard limits are reached. No uptime guarantees.
+    free: true
+    contact: false
+    limits:
+      storage_hard: 20GB
+      storage_soft: 5GB
+      events_soft: 100000
+      max_deployment_age_days: 30
+      inactivity_deletion_days: 7
+      read_only_grace_days: 3
+    features:
+      - HyperIndex hosting
+      - GraphQL API access
+      - HyperSync API access (rate-limited without token)
+      - Multichain indexing
+      - Local development environment
+    notes: >-
+      Soft limits trigger deletion at whichever threshold is reached first:
+      100,000 events processed, 5GB storage used, or 7 days of no requests.
+      After soft limits are hit a 7-day grace period applies, followed by
+      3 days of read-only access before permanent deletion.
+
+  - name: Production Small
+    description: >-
+      Entry-level paid plan for production deployments requiring stable uptime
+      and higher processing limits than the Development tier.
+    free: false
+    contact: false
+    url: https://envio.dev/pricing
+    features:
+      - HyperIndex hosting
+      - GraphQL API access with elevated rate limits
+      - HyperSync API access with API token
+      - Monitoring and alerts
+      - Deployment management
+      - Zero-downtime deployments
+      - Multichain indexing
+
+  - name: Production Medium
+    description: >-
+      Mid-tier paid plan for scaling indexers with increased event processing
+      capacity, storage, and access to Effect API cache support.
+    free: false
+    contact: false
+    url: https://envio.dev/pricing
+    features:
+      - All Production Small features
+      - Higher event processing limits
+      - Higher storage limits
+      - Effect API cache support
+      - Analytics dashboard
+
+  - name: Production Large
+    description: >-
+      High-volume production plan for demanding workloads requiring maximum
+      processing capacity within the shared infrastructure tier.
+    free: false
+    contact: false
+    url: https://envio.dev/pricing
+    features:
+      - All Production Medium features
+      - Maximum shared-infrastructure event processing limits
+      - Maximum storage limits
+      - Full analytics dashboard
+
+  - name: Dedicated
+    description: >-
+      Custom infrastructure plan with isolated resources, bespoke SLAs, and
+      priority support. Pricing is negotiated directly with Envio. Annual
+      commitments typically include two months free.
+    free: false
+    contact: true
+    contactUrl: https://discord.gg/envio
+    features:
+      - Isolated database access
+      - Custom SLAs (up to 99.99% uptime guarantee)
+      - Priority support
+      - Multi-region support
+      - Continuous backups
+      - All Production Large features
+    notes: >-
+      For preferred introductory pricing based on specific use case, contact
+      Envio via Discord. Yearly commitments generally qualify for 2 months free.

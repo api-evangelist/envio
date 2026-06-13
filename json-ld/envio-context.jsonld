@@ -1,0 +1,99 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "envio": "https://envio.dev/vocab#",
+    "aid": "https://apis.io/vocab#aid",
+    "HyperIndex": "envio:HyperIndex",
+    "HyperSync": "envio:HyperSync",
+    "HyperRPC": "envio:HyperRPC",
+    "blockchainNetwork": "envio:blockchainNetwork",
+    "evmChain": "envio:evmChain",
+    "smartContractEvent": "envio:smartContractEvent",
+    "indexer": "envio:indexer",
+    "graphqlEndpoint": "envio:graphqlEndpoint",
+    "hypersyncEndpoint": "envio:hypersyncEndpoint",
+    "hyperrpcEndpoint": "envio:hyperrpcEndpoint",
+    "fromBlock": "envio:fromBlock",
+    "toBlock": "envio:toBlock",
+    "logSelection": "envio:logSelection",
+    "transactionSelection": "envio:transactionSelection",
+    "traceSelection": "envio:traceSelection",
+    "fieldSelection": "envio:fieldSelection",
+    "archiveHeight": "envio:archiveHeight",
+    "nextBlock": "envio:nextBlock",
+    "rollbackGuard": "envio:rollbackGuard",
+    "reorgRecovery": "envio:reorgRecovery",
+    "multichain": "envio:multichain",
+    "bearerToken": "envio:bearerToken",
+    "apiToken": "envio:apiToken",
+    "SoftwareApplication": "schema:SoftwareApplication",
+    "WebAPI": "schema:WebAPI",
+    "name": "schema:name",
+    "description": "schema:description",
+    "url": "schema:url",
+    "documentation": "schema:documentation",
+    "provider": "schema:provider",
+    "version": "schema:version",
+    "license": "schema:license",
+    "keywords": "schema:keywords",
+    "dateCreated": "schema:dateCreated",
+    "dateModified": "schema:dateModified"
+  },
+  "@type": "WebAPI",
+  "@id": "https://envio.dev",
+  "name": "Envio",
+  "description": "High-performance blockchain data indexing platform providing developers with the fastest and most flexible way to access on-chain data via HyperIndex, HyperSync, and HyperRPC.",
+  "url": "https://envio.dev",
+  "documentation": "https://docs.envio.dev/docs/HyperIndex/overview",
+  "keywords": [
+    "Blockchain",
+    "Indexer",
+    "GraphQL",
+    "Web3",
+    "EVM",
+    "Smart Contracts",
+    "Data",
+    "HyperSync",
+    "HyperIndex",
+    "Multichain"
+  ],
+  "provider": {
+    "@type": "Organization",
+    "name": "Envio",
+    "url": "https://envio.dev",
+    "sameAs": [
+      "https://github.com/enviodev",
+      "https://x.com/envio_indexer",
+      "https://www.linkedin.com/company/envio_indexer",
+      "https://discord.gg/envio"
+    ]
+  },
+  "hasPart": [
+    {
+      "@type": "WebAPI",
+      "name": "HyperIndex GraphQL API",
+      "description": "Auto-generated GraphQL API exposing indexed smart contract events from any EVM-compatible chain.",
+      "url": "https://envio.dev",
+      "documentation": "https://docs.envio.dev/docs/HyperIndex/overview",
+      "keywords": ["GraphQL", "Blockchain", "Indexer", "EVM", "Smart Contracts"]
+    },
+    {
+      "@type": "WebAPI",
+      "name": "HyperSync REST API",
+      "description": "High-performance data retrieval layer offering up to 2,000x faster blockchain data access than standard JSON-RPC endpoints.",
+      "url": "https://eth.hypersync.xyz",
+      "documentation": "https://docs.envio.dev/docs/HyperSync/overview",
+      "keywords": ["REST", "Blockchain", "Data", "Multichain", "EVM"]
+    },
+    {
+      "@type": "WebAPI",
+      "name": "HyperRPC JSON-RPC API",
+      "description": "Read-only JSON-RPC endpoint optimised for data-intensive operations, providing up to 5x performance improvement over standard node providers.",
+      "url": "https://eth.rpc.hypersync.xyz",
+      "documentation": "https://docs.envio.dev/docs/HyperSync/overview",
+      "keywords": ["JSON-RPC", "Blockchain", "Ethereum", "EVM"]
+    }
+  ],
+  "dateCreated": "2026-06-13",
+  "dateModified": "2026-06-13"
+}

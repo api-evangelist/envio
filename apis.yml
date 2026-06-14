@@ -1,120 +1,111 @@
 aid: envio
 name: Envio
-description: >-
-  Envio is a high-performance blockchain data indexing platform providing
-  developers with the fastest and most flexible way to access on-chain data.
-  Its core products — HyperIndex, HyperSync, and HyperRPC — enable real-time
-  and historical indexing across 100+ EVM networks and beyond, exposing indexed
-  smart contract events through auto-generated GraphQL APIs and a REST-based
-  HyperSync data retrieval layer. Envio Cloud offers fully managed hosting with
-  git-based deployments, zero-downtime rollbacks, and multi-region support.
+description: Envio is a high-performance blockchain data indexing platform providing
+  developers with the fastest and most flexible way to access on-chain data. Its core
+  products — HyperIndex, HyperSync, and HyperRPC — enable real-time and historical
+  indexing across 100+ EVM networks and beyond, exposing indexed smart contract events
+  through auto-generated GraphQL APIs and a REST-based HyperSync data retrieval layer.
+  Envio Cloud offers fully managed hosting with git-based deployments, zero-downtime
+  rollbacks, and multi-region support.
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/envio/refs/heads/main/apis.yml
-created: "2026-06-13"
-modified: "2026-06-13"
-specificationVersion: "0.19"
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
 tags:
+- Blockchain
+- Indexer
+- GraphQL
+- Web3
+- EVM
+- Smart Contracts
+- Data
+- HyperSync
+- HyperIndex
+- Multichain
+apis:
+- name: HyperIndex GraphQL API
+  description: Auto-generated GraphQL API exposing indexed smart contract events from
+    any EVM-compatible chain. HyperIndex processes on-chain events into queryable
+    databases, supports multichain indexing from a single deployment, and handles
+    real-time event streaming with sub-second latency and automatic blockchain reorganisation
+    recovery.
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.envio.dev/docs/HyperIndex/overview
+  baseURL: https://envio.dev
+  tags:
+  - GraphQL
   - Blockchain
   - Indexer
-  - GraphQL
-  - Web3
   - EVM
   - Smart Contracts
-  - Data
-  - HyperSync
-  - HyperIndex
-  - Multichain
-
-apis:
-  - name: HyperIndex GraphQL API
-    description: >-
-      Auto-generated GraphQL API exposing indexed smart contract events from
-      any EVM-compatible chain. HyperIndex processes on-chain events into
-      queryable databases, supports multichain indexing from a single
-      deployment, and handles real-time event streaming with sub-second
-      latency and automatic blockchain reorganisation recovery.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://docs.envio.dev/docs/HyperIndex/overview
-    baseURL: https://envio.dev
-    tags:
-      - GraphQL
-      - Blockchain
-      - Indexer
-      - EVM
-      - Smart Contracts
-    properties:
-      - type: Documentation
-        url: https://docs.envio.dev/docs/HyperIndex/overview
-      - type: Authentication
-        url: https://docs.envio.dev/docs/HyperSync/api-tokens
-
-  - name: HyperSync REST API
-    description: >-
-      High-performance data retrieval layer offering up to 2,000x faster
-      blockchain data access than standard JSON-RPC endpoints. Supports
-      structured queries over logs, transactions, and traces across 100+
-      blockchain networks via REST endpoints. Available across Ethereum,
-      Arbitrum, Optimism, Polygon, Base, Avalanche, and many more chains.
-      Client SDKs available for Python, Rust, Node.js, and Go.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://docs.envio.dev/docs/HyperSync/overview
-    baseURL: https://eth.hypersync.xyz
-    tags:
-      - REST
-      - Blockchain
-      - Data
-      - Multichain
-      - EVM
-    properties:
-      - type: Documentation
-        url: https://docs.envio.dev/docs/HyperSync/overview
-      - type: Authentication
-        url: https://docs.envio.dev/docs/HyperSync/api-tokens
-
-  - name: HyperRPC JSON-RPC API
-    description: >-
-      Read-only JSON-RPC endpoint optimised for data-intensive operations,
-      providing up to 5x performance improvement over standard node providers.
-      Functions as a drop-in replacement for existing Ethereum JSON-RPC
-      integrations while delivering significantly faster response times for
-      historical and real-time data queries.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://docs.envio.dev/docs/HyperSync/overview
-    baseURL: https://eth.rpc.hypersync.xyz
-    tags:
-      - JSON-RPC
-      - Blockchain
-      - Ethereum
-      - EVM
-    properties:
-      - type: Documentation
-        url: https://docs.envio.dev/docs/HyperSync/overview
-
-common:
-  - type: Website
-    url: https://envio.dev
+  properties:
   - type: Documentation
     url: https://docs.envio.dev/docs/HyperIndex/overview
-  - type: GitHubOrg
-    url: https://github.com/enviodev
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/envio_indexer
-  - type: Blog
-    url: https://docs.envio.dev/blog
-  - type: Pricing
-    url: https://envio.dev/pricing
-  - type: X
-    url: https://x.com/envio_indexer
-  - type: Discord
-    url: https://discord.gg/envio
-  - type: Plans
-    url: plans/envio-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/envio-rate-limits.yml
-  - type: FinOps
-    url: finops/envio-finops.yml
-
+  - type: Authentication
+    url: https://docs.envio.dev/docs/HyperSync/api-tokens
+  - url: graphql/envio-graphql.md
+    type: GraphQL
+- name: HyperSync REST API
+  description: High-performance data retrieval layer offering up to 2,000x faster
+    blockchain data access than standard JSON-RPC endpoints. Supports structured queries
+    over logs, transactions, and traces across 100+ blockchain networks via REST endpoints.
+    Available across Ethereum, Arbitrum, Optimism, Polygon, Base, Avalanche, and many
+    more chains. Client SDKs available for Python, Rust, Node.js, and Go.
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.envio.dev/docs/HyperSync/overview
+  baseURL: https://eth.hypersync.xyz
+  tags:
+  - REST
+  - Blockchain
+  - Data
+  - Multichain
+  - EVM
+  properties:
+  - type: Documentation
+    url: https://docs.envio.dev/docs/HyperSync/overview
+  - type: Authentication
+    url: https://docs.envio.dev/docs/HyperSync/api-tokens
+- name: HyperRPC JSON-RPC API
+  description: Read-only JSON-RPC endpoint optimised for data-intensive operations,
+    providing up to 5x performance improvement over standard node providers. Functions
+    as a drop-in replacement for existing Ethereum JSON-RPC integrations while delivering
+    significantly faster response times for historical and real-time data queries.
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.envio.dev/docs/HyperSync/overview
+  baseURL: https://eth.rpc.hypersync.xyz
+  tags:
+  - JSON-RPC
+  - Blockchain
+  - Ethereum
+  - EVM
+  properties:
+  - type: Documentation
+    url: https://docs.envio.dev/docs/HyperSync/overview
+common:
+- type: Website
+  url: https://envio.dev
+- type: Documentation
+  url: https://docs.envio.dev/docs/HyperIndex/overview
+- type: GitHubOrg
+  url: https://github.com/enviodev
+- type: LinkedIn
+  url: https://www.linkedin.com/company/envio_indexer
+- type: Blog
+  url: https://docs.envio.dev/blog
+- type: Pricing
+  url: https://envio.dev/pricing
+- type: X
+  url: https://x.com/envio_indexer
+- type: Discord
+  url: https://discord.gg/envio
+- type: Plans
+  url: plans/envio-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/envio-rate-limits.yml
+- type: FinOps
+  url: finops/envio-finops.yml
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

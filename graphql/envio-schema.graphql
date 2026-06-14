@@ -1,0 +1,459 @@
+"""
+Envio HyperIndex GraphQL Schema
+Source: https://docs.envio.dev/docs/HyperIndex/overview
+Endpoint: https://indexer.hyperindex.xyz/{deployment-id}/graphql
+
+HyperIndex auto-generates a GraphQL API from a user-defined schema.graphql.
+The schema below documents:
+  - Scalar types supported by the platform
+  - Directives available for field configuration and indexing
+  - Built-in system types exposed on every deployment
+  - Representative user-defined entity examples from official documentation
+"""
+
+# ---------------------------------------------------------------------------
+# Scalar types
+# ---------------------------------------------------------------------------
+
+"""Unique identifier (stored as text)."""
+scalar ID
+
+"""Arbitrary-precision integer (stored as numeric)."""
+scalar BigInt
+
+"""Arbitrary-precision decimal (stored as numeric)."""
+scalar BigDecimal
+
+"""Raw bytes value (stored as text, hex-encoded)."""
+scalar Bytes
+
+"""Timezone-aware timestamp."""
+scalar Timestamp
+
+"""Arbitrary JSON object."""
+scalar Json
+
+# ---------------------------------------------------------------------------
+# Directives
+# ---------------------------------------------------------------------------
+
+"""
+Establishes a reverse-lookup (derived) relationship between entity types.
+Applied to array fields that are computed from a foreign-key field on the
+referenced type.
+"""
+directive @derivedFrom(field: String!) on FIELD_DEFINITION
+
+"""
+Creates a database index on the annotated field to optimise query performance.
+"""
+directive @index on FIELD_DEFINITION
+
+"""
+Customises storage precision and scale for BigInt and BigDecimal fields.
+"""
+directive @config(precision: Int, scale: Int) on FIELD_DEFINITION
+
+# ---------------------------------------------------------------------------
+# Built-in system types (present on every HyperIndex deployment)
+# ---------------------------------------------------------------------------
+
+"""
+Indexing progress and metadata per configured blockchain chain.
+Returned by the _meta query.
+"""
+type _meta {
+  """EVM chain identifier (e.g. 1 for Ethereum mainnet)."""
+  chainId: Int!
+
+  """
+  Highest block number that has been fully processed and committed to the
+  database. Use this to determine how far the indexer has progressed.
+  """
+  progressBlock: Int!
+
+  """Total number of smart-contract events processed and written to the database."""
+  eventsProcessed: Int!
+
+  """Latest block number for which events are buffered and ready to process."""
+  bufferBlock: Int
+
+  """Earliest block number that has been processed for this chain."""
+  firstEventBlock: Int
+
+  """Current block number of the upstream data source."""
+  sourceBlock: Int
+
+  """
+  Timestamp at which the historical sync (catch-up phase) completed.
+  Null if still syncing.
+  """
+  readyAt: String
+
+  """Whether the indexer has completed its initial historical sync."""
+  isReady: Boolean!
+
+  """Starting block number as configured in config.yaml."""
+  startBlock: Int!
+
+  """
+  Ending block number as configured in config.yaml.
+  Null when indexing continues to the chain tip.
+  """
+  endBlock: Int
+}
+
+"""
+Raw blockchain event record. Disabled by default; enable with
+`raw_events: true` in config.yaml.
+"""
+type raw_events {
+  """Composite primary key string."""
+  id: ID!
+
+  """EVM chain identifier."""
+  chainId: Int!
+
+  """Block number in which the event was emitted."""
+  blockNumber: Int!
+
+  """Index of the log within its block."""
+  logIndex: Int!
+
+  """
+  ABI-encoded event parameters as a JSON object.
+  Shape depends on the specific contract event.
+  """
+  params: Json
+
+  """Address of the contract that emitted the event."""
+  contractAddress: Bytes!
+
+  """Keccak-256 topic0 hash identifying the event signature."""
+  eventSignature: Bytes!
+
+  """Unix timestamp of the block."""
+  blockTimestamp: Int!
+
+  """Hash of the transaction that produced this event."""
+  transactionHash: Bytes!
+}
+
+"""
+Contract addresses added dynamically at runtime via the HyperIndex
+`addDynamicContract` helper. Persisted across restarts.
+"""
+type dynamic_contracts {
+  """Composite primary key string."""
+  id: ID!
+
+  """EVM chain identifier."""
+  chainId: Int!
+
+  """Contract address registered dynamically."""
+  contractAddress: Bytes!
+
+  """Name of the contract type as defined in config.yaml."""
+  contractType: String!
+
+  """
+  Block number at which this dynamic contract was first registered.
+  Indexing for this address begins from this block.
+  """
+  registeringEventBlockNumber: Int!
+}
+
+# ---------------------------------------------------------------------------
+# User-defined entity examples from official Envio documentation
+# ---------------------------------------------------------------------------
+
+"""
+Example entity: tracks a user's greeting interactions.
+Defined in the indexer's schema.graphql; shown in official documentation.
+"""
+type User {
+  """Unique user identifier (typically a wallet address)."""
+  id: ID!
+
+  """Ordered list of all greeting messages sent by this user."""
+  greetings: [String!]!
+
+  """The most recent greeting message sent by this user."""
+  latestGreeting: String!
+
+  """Total number of greetings sent by this user."""
+  numberOfGreetings: Int!
+}
+
+"""
+Example entity: tracks a token-pair trading market.
+Illustrates BigDecimal usage for price and volume fields.
+"""
+type TokenPair {
+  """Unique identifier for the trading pair."""
+  id: ID!
+
+  """Human-readable name for the pair (e.g. ETH/USDC)."""
+  name: String!
+
+  """Current price of the pair."""
+  price: BigDecimal!
+
+  """Cumulative trading volume for the pair."""
+  volume: BigDecimal!
+}
+
+"""
+Example entity: NFT collection with a one-to-many relationship to Token.
+Illustrates @derivedFrom for reverse lookups.
+"""
+type NftCollection {
+  """Contract address used as the unique identifier."""
+  id: ID!
+
+  """On-chain contract address of the collection."""
+  contractAddress: Bytes!
+
+  """Collection name as returned by the ERC-721 name() function."""
+  name: String!
+
+  """Collection symbol as returned by the ERC-721 symbol() function."""
+  symbol: String!
+
+  """Maximum token supply defined by the contract."""
+  maxSupply: BigInt!
+
+  """Number of tokens minted so far."""
+  currentSupply: Int!
+
+  """All tokens that belong to this collection."""
+  tokens: [Token!]! @derivedFrom(field: "collection")
+}
+
+"""
+Example entity: individual NFT within a collection.
+Illustrates a many-to-one relationship with @index on the owner field.
+"""
+type Token {
+  """Composite identifier: {collectionAddress}-{tokenId}."""
+  id: ID!
+
+  """On-chain token ID within its collection."""
+  tokenId: BigInt!
+
+  """The NftCollection this token belongs to."""
+  collection: NftCollection!
+
+  """Current owner of the token."""
+  owner: User! @index
+}
+
+"""
+Example entity: ERC-20 token transfer event.
+Illustrates field-level documentation and BigInt usage.
+"""
+type Transfer {
+  """Composite identifier: {txHash}-{logIndex}."""
+  id: ID!
+
+  "The address the tokens were sent from."
+  from: String!
+
+  "The address the tokens were sent to."
+  to: String!
+
+  "The amount transferred, in wei."
+  value: BigInt!
+}
+
+"""
+Example entity: payment with configurable decimal precision.
+Illustrates the @config directive on BigInt and BigDecimal fields.
+"""
+type Payment {
+  """Unique payment identifier."""
+  id: ID!
+
+  """Payment amount in the token's smallest unit."""
+  amount: BigInt @config(precision: 76)
+
+  """Payment price with fixed decimal precision."""
+  price: BigDecimal @config(precision: 10, scale: 2)
+}
+
+# ---------------------------------------------------------------------------
+# Enum example from official documentation
+# ---------------------------------------------------------------------------
+
+"""Account role used to distinguish admin and standard users."""
+enum AccountType {
+  ADMIN
+  USER
+}
+
+# ---------------------------------------------------------------------------
+# Query root
+# ---------------------------------------------------------------------------
+
+type Query {
+  """
+  Returns indexing progress and metadata for all configured chains.
+  Filter by chain with: _meta(where: { chainId: { _eq: 1 } })
+  """
+  _meta(where: _metaBoolExp): [_meta!]!
+
+  """
+  Query raw blockchain events (requires raw_events: true in config.yaml).
+  Supports limit, offset, order_by, and where filtering.
+  """
+  raw_events(
+    limit: Int
+    offset: Int
+    order_by: [raw_eventsOrderBy!]
+    where: raw_eventsBoolExp
+  ): [raw_events!]!
+
+  """
+  Query dynamically registered contract addresses.
+  Supports limit, offset, order_by, and where filtering.
+  """
+  dynamic_contracts(
+    limit: Int
+    offset: Int
+    order_by: [dynamic_contractsOrderBy!]
+    where: dynamic_contractsBoolExp
+  ): [dynamic_contracts!]!
+
+  """
+  Fetch a single entity by primary key.
+  Pattern: {EntityName}_by_pk(id: "…")
+  User-defined entities follow this same pattern.
+  """
+  User_by_pk(id: ID!): User
+
+  """
+  Query user-defined entities (generated per deployment schema).
+  Supports limit, offset, order_by, and where filtering.
+  Pattern: {EntityName}(limit: Int, offset: Int, order_by: …, where: …)
+  """
+  User(limit: Int, offset: Int, order_by: [UserOrderBy!], where: UserBoolExp): [User!]!
+}
+
+# ---------------------------------------------------------------------------
+# Subscription root (WebSocket: wss://indexer.hyperindex.xyz/{id}/graphql)
+# ---------------------------------------------------------------------------
+
+type Subscription {
+  """
+  Subscribe to real-time updates for any user-defined entity.
+  Example: subscription { Swap(order_by: { id: desc }, limit: 10) { id } }
+  """
+  User(limit: Int, offset: Int, order_by: [UserOrderBy!], where: UserBoolExp): [User!]!
+}
+
+# ---------------------------------------------------------------------------
+# Filter / ordering input stubs
+# (Hasura-generated per entity; representative patterns shown)
+# ---------------------------------------------------------------------------
+
+"""Boolean expression for filtering _meta rows."""
+input _metaBoolExp {
+  chainId: IntComparisonExp
+  isReady: BooleanComparisonExp
+  _and: [_metaBoolExp!]
+  _or: [_metaBoolExp!]
+  _not: _metaBoolExp
+}
+
+"""Boolean expression for filtering raw_events rows."""
+input raw_eventsBoolExp {
+  chainId: IntComparisonExp
+  blockNumber: IntComparisonExp
+  contractAddress: StringComparisonExp
+  _and: [raw_eventsBoolExp!]
+  _or: [raw_eventsBoolExp!]
+  _not: raw_eventsBoolExp
+}
+
+"""Boolean expression for filtering dynamic_contracts rows."""
+input dynamic_contractsBoolExp {
+  chainId: IntComparisonExp
+  contractAddress: StringComparisonExp
+  contractType: StringComparisonExp
+  _and: [dynamic_contractsBoolExp!]
+  _or: [dynamic_contractsBoolExp!]
+  _not: dynamic_contractsBoolExp
+}
+
+"""Boolean expression for filtering User rows."""
+input UserBoolExp {
+  id: StringComparisonExp
+  latestGreeting: StringComparisonExp
+  numberOfGreetings: IntComparisonExp
+  _and: [UserBoolExp!]
+  _or: [UserBoolExp!]
+  _not: UserBoolExp
+}
+
+"""Integer comparison operators supported by Hasura."""
+input IntComparisonExp {
+  _eq: Int
+  _neq: Int
+  _gt: Int
+  _gte: Int
+  _lt: Int
+  _lte: Int
+  _in: [Int!]
+  _nin: [Int!]
+}
+
+"""String / Bytes comparison operators supported by Hasura."""
+input StringComparisonExp {
+  _eq: String
+  _neq: String
+  _gt: String
+  _gte: String
+  _lt: String
+  _lte: String
+  _in: [String!]
+  _nin: [String!]
+  _ilike: String
+}
+
+"""Boolean comparison operators supported by Hasura."""
+input BooleanComparisonExp {
+  _eq: Boolean
+  _neq: Boolean
+}
+
+"""Ordering for _meta rows."""
+input _metaOrderBy {
+  chainId: OrderDirection
+  progressBlock: OrderDirection
+}
+
+"""Ordering for raw_events rows."""
+input raw_eventsOrderBy {
+  blockNumber: OrderDirection
+  logIndex: OrderDirection
+  blockTimestamp: OrderDirection
+}
+
+"""Ordering for dynamic_contracts rows."""
+input dynamic_contractsOrderBy {
+  chainId: OrderDirection
+  registeringEventBlockNumber: OrderDirection
+}
+
+"""Ordering for User rows."""
+input UserOrderBy {
+  id: OrderDirection
+  numberOfGreetings: OrderDirection
+  latestGreeting: OrderDirection
+}
+
+"""Sort direction."""
+enum OrderDirection {
+  asc
+  desc
+}

@@ -641,5 +641,14 @@
       "description": "How to query blockchain data: a practical comparison of self-hosted nodes, RPC providers, and indexers with honest trade-offs on speed, cost, and flexibility.",
       "image": "https://docs.envio.dev/blog-assets/how-to-query-blockchain-data.png"
     }
-  ]
+  ],
+  "repo": "envio",
+  "feeds": [
+    {
+      "source": "https://www.linkedin.com/company/envio_indexer",
+      "error": "HTTPError"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-06-14T20:42:17Z"
 }

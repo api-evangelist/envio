@@ -8,7 +8,7 @@ description: Envio is a high-performance blockchain data indexing platform provi
   Envio Cloud offers fully managed hosting with git-based deployments, zero-downtime
   rollbacks, and multi-region support.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/envio/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -31,7 +31,7 @@ apis:
     databases, supports multichain indexing from a single deployment, and handles
     real-time event streaming with sub-second latency and automatic blockchain reorganisation
     recovery.
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.envio.dev/docs/HyperIndex/overview
   baseURL: https://envio.dev
   tags:
@@ -53,7 +53,7 @@ apis:
     over logs, transactions, and traces across 100+ blockchain networks via REST endpoints.
     Available across Ethereum, Arbitrum, Optimism, Polygon, Base, Avalanche, and many
     more chains. Client SDKs available for Python, Rust, Node.js, and Go.
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.envio.dev/docs/HyperSync/overview
   baseURL: https://eth.hypersync.xyz
   tags:
@@ -72,7 +72,7 @@ apis:
     providing up to 5x performance improvement over standard node providers. Functions
     as a drop-in replacement for existing Ethereum JSON-RPC integrations while delivering
     significantly faster response times for historical and real-time data queries.
-  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.envio.dev/docs/HyperSync/overview
   baseURL: https://eth.rpc.hypersync.xyz
   tags:

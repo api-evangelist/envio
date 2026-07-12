@@ -84,6 +84,8 @@ apis:
   - type: Documentation
     url: https://docs.envio.dev/docs/HyperSync/overview
 common:
+- type: DomainSecurity
+  url: security/envio-domain-security.yml
 - type: Website
   url: https://envio.dev
 - type: Documentation

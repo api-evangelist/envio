@@ -35,6 +35,17 @@ tags:
 - Data
 - HyperSync
 - HyperIndex
+- Multi-Chain
+tags_raw:
+- Blockchain
+- Indexer
+- GraphQL
+- Web3
+- EVM
+- Smart Contracts
+- Data
+- HyperSync
+- HyperIndex
 - Multichain
 apis:
 - name: HyperIndex GraphQL API
@@ -69,6 +80,12 @@ apis:
   humanURL: https://docs.envio.dev/docs/HyperSync/overview
   baseURL: https://eth.hypersync.xyz
   tags:
+  - REST
+  - Blockchain
+  - Data
+  - Multi-Chain
+  - EVM
+  tags_raw:
   - REST
   - Blockchain
   - Data

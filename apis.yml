@@ -46,7 +46,7 @@ tags:
 - Data
 - HyperSync
 - HyperIndex
-- Multi-Chain
+- Multichain
 tags_raw:
 - Blockchain
 - Indexer
@@ -94,7 +94,7 @@ apis:
   - REST
   - Blockchain
   - Data
-  - Multi-Chain
+  - Multichain
   - EVM
   tags_raw:
   - REST

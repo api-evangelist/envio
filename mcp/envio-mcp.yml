@@ -16,8 +16,12 @@ deployment:
 tools_count: 2
 tools:
 - name: docs_search
-  description: ''
+  description: Search the documentation for relevant pages. Returns matching documents with URLs, snippets,
+    and relevance scores. Use this to find information across all documentation.
 - name: docs_fetch
-  description: ''
+  description: Fetch the complete content of a documentation page. Use this after searching to get the
+    full markdown content of a specific page.
 tools_source: live tools/list via initialize handshake, 2026-09-12 (signals/audit_mcp_authorship.py --probe)
 authorship: provider
+descriptions_source: live tools/list (authorship probe or saved capture); filled by backfill-tools-from-authorship.py
+  --descriptions, 2026-09-28

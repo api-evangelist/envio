@@ -1,0 +1,65 @@
+{
+  "endpoint": "https://docs.envio.dev/mcp",
+  "captured": "2026-10-20",
+  "method": "initialize + tools/list (anonymous, no tool called; roadmap#992)",
+  "protocol_version": "2025-06-18",
+  "server_info": {
+    "name": "envio-docs",
+    "version": "1.0.0"
+  },
+  "result": {
+    "tools": [
+      {
+        "name": "docs_search",
+        "description": "Search the documentation for relevant pages. Returns matching documents with URLs, snippets, and relevance scores. Use this to find information across all documentation.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The search query string"
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20,
+              "default": 16,
+              "description": "Maximum number of results to return (1-20, default: 16)"
+            }
+          },
+          "required": [
+            "query"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "docs_fetch",
+        "description": "Fetch the complete content of a documentation page. Use this after searching to get the full markdown content of a specific page.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "format": "uri",
+              "description": "The full URL of the page to fetch (e.g., \"https://docs.example.com/docs/getting-started\")"
+            }
+          },
+          "required": [
+            "url"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      }
+    ]
+  }
+}

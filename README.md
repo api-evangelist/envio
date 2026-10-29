@@ -64,27 +64,126 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Envio is a high-performance blockchain data indexing platform providing
-developers with the fastest and most flexible way to access on-chain data.
-Its core products — HyperIndex, HyperSync, and HyperRPC — enable real-time
-and historical indexing across 100+ EVM networks and beyond.
+Envio is a high-performance blockchain data indexing platform providing developers with the fastest and most flexible way to access on-chain data. Its core products — HyperIndex, HyperSync, and HyperRPC — enable real-time and historical indexing across 100+ EVM networks and beyond, exposing indexed smart contract events through auto-generated GraphQL APIs and a REST-based HyperSync data retrieval layer. Envio Cloud offers fully managed hosting with git-based deployments, zero-downtime rollbacks, and multi-region support.
 
-- **Website:** https://envio.dev
-- **Documentation:** https://docs.envio.dev/docs/HyperIndex/overview
-- **GitHub:** https://github.com/enviodev
-- **Blog:** https://docs.envio.dev/blog
-- **Pricing:** https://envio.dev/pricing
-- **X:** https://x.com/envio_indexer
-- **LinkedIn:** https://www.linkedin.com/company/envio_indexer
-- **Discord:** https://discord.gg/envio
+**Areas:** Blockchain · Indexer · GraphQL · Web3 · EVM · Smart Contracts · Data · HyperSync · HyperIndex · Multi-Chain
 
-## APIs
+## Envio on APIs.io
 
-- **HyperIndex GraphQL API** — auto-generated GraphQL endpoints for indexed smart contract events
-- **HyperSync REST API** — high-speed data retrieval layer (up to 2,000x faster than JSON-RPC) across 100+ chains
-- **HyperRPC JSON-RPC API** — drop-in JSON-RPC replacement optimised for data-intensive operations
+Everything profiled for Envio is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/envio/](https://apis.io/providers/envio/)** — or go straight to one of the APIs or properties below.
 
-## Profile
+### APIs (3)
 
-This repository contains the APIs.json profile for Envio maintained by
-[API Evangelist](https://apievangelist.com).
+- [HyperIndex GraphQL API](https://apis.io/apis/envio/hyperindex-graphql-api/) — Auto-generated GraphQL API exposing indexed smart contract events from any EVM-compatible chain. HyperIndex processes on-chain events into queryable…
+- [HyperSync REST API](https://apis.io/apis/envio/hypersync-rest-api/) — High-performance data retrieval layer offering up to 2,000x faster blockchain data access than standard JSON-RPC endpoints. Supports structured queries over…
+- [HyperRPC JSON-RPC API](https://apis.io/apis/envio/hyperrpc-json-rpc-api/) — Read-only JSON-RPC endpoint optimised for data-intensive operations, providing up to 5x performance improvement over standard node providers. Functions as a…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### GraphQL (1)
+
+GraphQL schemas.
+
+- [Envio GraphQL API](https://apis.io/graphqls/envio/envio-graphql/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [envio](https://apis.io/servers/envio/envio/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Envio Context](https://apis.io/jsonld/envio/envio-context/)
+
+#### Security (1)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Envio Domain Security](https://apis.io/security/envio/envio-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Envio Plans Pricing](https://apis.io/plans/envio/envio-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Envio Rate Limits](https://apis.io/rate-limits/envio/envio-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Envio Finops](https://apis.io/finops/envio/envio-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://envio.dev)
+- [Documentation](https://docs.envio.dev/docs/HyperIndex/overview)
+- [Pricing](https://envio.dev/pricing)
+- [Blog](https://docs.envio.dev/blog)
+
+## API Evangelist rating
+
+**Kin Score 28.8** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 65.0 |
+| Contract quality | 47.9 |
+| Contract governance | 0.0 |
+| Operational transparency | 5.3 |
+| Developer ergonomics | 28.6 |
+| Access clarity | 18.4 |
+
+**Agent readiness 24.7** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/envio/](https://apis.io/providers/envio/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Envio: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/envio/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
